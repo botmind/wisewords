@@ -1,0 +1,24 @@
+from django.db import models
+import datetime
+from django.utils import timezone
+
+# Create your models here.
+
+
+class Author(models.Model):
+	name = models.CharField(max_length=200)
+
+	def __str__(self):
+		return self.name
+
+class Quote(models.Model):
+	quote_text = models.CharField(max_length=420)
+	pub_date = models.DateTimeField('date published')
+	votes = models.IntegerField(default=0)
+	author = models.ForeignKey(Author, on_delete=models.CASCADE)
+
+	def __str__(self):
+		return self.quote_text
+
+	def was_published_recently(self):
+		return self.pub_date >= timezone.now() - datetime.timedelta(days=1)

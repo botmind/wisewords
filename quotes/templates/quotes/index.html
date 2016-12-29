@@ -1,0 +1,11 @@
+<h1>Welcome to Wise Words</h1>
+
+{% if last_five_quotes %}
+	<ul>
+		{% for quote in last_five_quotes %}
+			<li><a href="/quotes/{{ quote.id }}/">{{ quote.quote_text }}</a> - <a href="/quotes/authors/{{ quote.author.id }}/">{{ quote.author.name }}</a></li>
+		{% endfor %}
+	</ul>
+{% else %}
+	<p>No quotes are available.</p>
+{% endif %}
