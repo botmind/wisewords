@@ -1,0 +1,29 @@
+{% extends 'quotes/base.html' %}
+
+{% block page_content %}
+
+	<div class="container">
+		<div class="row">
+			<div class="col-md-8 col-md-offset 2">
+				<h3><a href="{% url 'quotes:author_quotes' quote.author.id %}">{{ quote.author.name }}</a></h3>
+				<p>{{ quote.quote_text }}</p>
+				<p>{{ quote.votes }} votes</p>
+
+				{% if error_message %}
+					<p><strong>{{ error_message }}</strong></p>
+				{% endif %}
+
+				<form action="{% url 'quotes:vote' quote.id %}" method="post">
+					{% csrf_token %}
+					<button type="submit" class="btn btn-default">Upvote the Quote!</button>
+					
+				</form>
+
+			</div>
+		</div>
+	</div>
+	
+
+
+
+{% endblock %}

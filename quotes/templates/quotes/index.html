@@ -1,11 +1,29 @@
-<h1>Welcome to Wise Words</h1>
+{% extends 'quotes/base.html' %}
 
-{% if last_five_quotes %}
-	<ul>
-		{% for quote in last_five_quotes %}
-			<li><a href="/quotes/{{ quote.id }}/">{{ quote.quote_text }}</a> - <a href="/quotes/authors/{{ quote.author.id }}/">{{ quote.author.name }}</a></li>
-		{% endfor %}
-	</ul>
-{% else %}
-	<p>No quotes are available.</p>
-{% endif %}
+{% block page_content %}
+
+	<div class="container">
+		<div class="row">
+			<div class="col-md-8 col-md-offset-2">
+					{% if last_five_quotes %}
+						<div class="jumbotron">
+							<h1>Fresh Quotes</h1>
+							<p>The latest words of wisdom submitted to our site ...</p>
+						</div>
+						<table class="table">
+							{% for quote in last_five_quotes %}
+								<tr>
+									<td><a href="{% url 'quotes:author_quotes' quote.author.id %}">{{ quote.author.name }}</a></td>
+									<td><a href="{% url 'quotes:quote_detail' quote.id %}">{{ quote.quote_text }}</a></td>
+								</tr>
+							{% endfor %}
+						</table>
+					{% else %}
+						<p>No quotes are available.</p>
+					{% endif %}
+			</div>
+		</div>
+	</div>
+
+
+{% endblock %}

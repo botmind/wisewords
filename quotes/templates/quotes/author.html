@@ -1,0 +1,26 @@
+{% extends 'quotes/base.html' %}
+
+{% block page_content %}
+
+	<div class="container">
+		<div class="row">
+			<div class="col-md-8 col-md-offset-2">
+				<div class="jumbotron">
+					<h1>{{ author.name }}</h1>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-8 col-md-offset-2">
+				<table class="table">
+					{% for quote in quotes %}
+						<tr><td><a href="{% url 'quotes:quote_detail' quote.id %}">{{ quote.quote_text }}</a></td></tr>
+					{% endfor %}
+				</table>
+			</div>
+		</div>
+
+
+	</div>
+
+{% endblock %}

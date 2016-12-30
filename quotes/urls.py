@@ -2,6 +2,7 @@ from django.conf.urls import url
 
 from . import views
 
+app_name = 'quotes' #add a namespace in order to differentiate this app from others on the same site
 urlpatterns = [
 	url(r'^$', views.index, name='index'),
 	url(r'^(?P<quote_id>[0-9]+)/$', views.quote_detail, name='quote_detail'),
