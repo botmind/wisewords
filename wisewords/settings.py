@@ -25,7 +25,7 @@ SECRET_KEY = 'sd3oqor=)#bb_y=%^^5qx1k23j_zu+i-)ujzl)&8&)_*0km@jl'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['botmind.pythonanywhere.com']
 
 
 # Application definition
