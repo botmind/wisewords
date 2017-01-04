@@ -5,6 +5,7 @@ from django.urls import reverse
 from django.utils import timezone
 
 from .models import Quote, Author
+from .forms import QuoteForm
 
 # Create your views here.
 def index(request):
@@ -29,3 +30,35 @@ def vote(request, quote_id):
 	quote.votes += 1
 	quote.save()
 	return HttpResponseRedirect(reverse('quotes:quote_detail', args=(quote_id,)))
+
+def new_quote(request):
+	if request.method == 'POST':
+		# create form instance and populate with data from request
+		form = QuoteForm(request.POST)
+		if form.is_valid():
+			#process data in form.cleaned_data
+			author_name = form.cleaned_data['author_name']
+			quote_text = form.cleaned_data['quote_text']
+			pub_date = timezone.now()
+
+			try:
+				author = Author.objects.get(name=author_name)
+			except Author.DoesNotExist:
+				author = Author(name=author_name)
+				author.save()
+			
+			quote_exists = Quote.objects.filter(quote_text=quote_text, author=author)
+
+			if not quote_exists:
+				quote = Quote(author=author, quote_text=quote_text, pub_date=pub_date)
+				quote.save()
+				#redirect to new URL
+				return HttpResponseRedirect(reverse('quotes:index'))
+			else:
+				form.add_error('quote_text', 'This quote already exists.')
+			
+	else:
+		#if GET, create blank form
+		form = QuoteForm()
+
+	return render(request, 'quotes/new_quote.html', {'form': form})

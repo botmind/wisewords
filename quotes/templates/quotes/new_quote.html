@@ -1,0 +1,29 @@
+{% extends 'quotes/base.html' %}
+
+{% block page_content %}
+
+	<div class="container">
+		<div class="row">
+			<div class="col-md-8 col-md-offset-2">
+				<div class="jumbotron">
+					<h1>Submit a new quote</h1>
+					<p>Enlighten us with some more words of wisdom ...</p>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-8 col-md-offset-2">
+				<form action="/quotes/new_quote/" method="post" novalidate>
+					{% csrf_token %}
+					<table class="table table-condensed">
+						{{ form.as_table }}
+					</table>
+					<input class="btn btn-default" type="submit" value="Submit" />
+				</form>
+			</div>
+		</div>
+
+
+	</div>
+
+{% endblock %}

@@ -6,7 +6,7 @@ from django.utils import timezone
 
 
 class Author(models.Model):
-	name = models.CharField(max_length=200)
+	name = models.CharField(max_length=100, unique=True)
 
 	def __str__(self):
 		return self.name
@@ -23,3 +23,6 @@ class Quote(models.Model):
 	def was_published_recently(self):
 		now = timezone.now()
 		return now - datetime.timedelta(days=1) <= self.pub_date <= now
+
+	class Meta:
+		unique_together = (("quote_text", "author"),)
